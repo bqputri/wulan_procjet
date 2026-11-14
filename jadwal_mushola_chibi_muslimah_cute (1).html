@@ -13,6 +13,7 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -42,6 +43,12 @@
     <style>
         :root {
             --outline-brown: #5D4037;
+            --shadow-color: #5D4037;
+        }
+
+        html.dark {
+            --outline-brown: #D8B4FE;
+            --shadow-color: #6D28D9;
         }
 
         body {
@@ -50,6 +57,12 @@
             background: linear-gradient(135deg, #FFF0F5 0%, #F3E8FF 50%, #E8F8F5 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark body {
+            color: #FCE7F3;
+            background: linear-gradient(135deg, #1A1325 0%, #231934 50%, #16202F 100%);
         }
 
         h1, h2, h3, .font-cute {
@@ -57,29 +70,33 @@
         }
 
         .kawaii-border {
-            border: 3px solid #5D4037;
-            box-shadow: 0 6px 0 #5D4037;
+            border: 3px solid var(--outline-brown);
+            box-shadow: 0 6px 0 var(--shadow-color);
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .kawaii-border-sm {
-            border: 2.5px solid #5D4037;
-            box-shadow: 0 4px 0 #5D4037;
+            border: 2.5px solid var(--outline-brown);
+            box-shadow: 0 4px 0 var(--shadow-color);
             transition: all 0.18s ease;
         }
 
         .kawaii-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 #5D4037;
+            box-shadow: 0 6px 0 var(--shadow-color);
         }
 
         .kawaii-btn:active {
             transform: translateY(2px);
-            box-shadow: 0 1px 0 #5D4037;
+            box-shadow: 0 1px 0 var(--shadow-color);
         }
 
         .sticker-svg {
             filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 4px 4px rgba(93, 64, 55, 0.15));
+        }
+
+        html.dark .sticker-svg {
+            filter: drop-shadow(2px 0 0 #31234A) drop-shadow(-2px 0 0 #31234A) drop-shadow(0 2px 0 #31234A) drop-shadow(0 -2px 0 #31234A) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
         }
 
         @keyframes floatSlow {
@@ -128,11 +145,69 @@
             border: 2px solid #5D4037;
         }
 
+        html.dark ::-webkit-scrollbar-track {
+            background: #1A1325;
+        }
+        html.dark ::-webkit-scrollbar-thumb {
+            background: #7E57C2;
+            border: 2px solid #D8B4FE;
+        }
+
         .nav-tab-active {
             background-color: #FFD1DC !important;
             color: #5D4037 !important;
             transform: translateY(-2px);
-            box-shadow: 0 4px 0 #5D4037 !important;
+            box-shadow: 0 4px 0 var(--shadow-color) !important;
+        }
+
+        html.dark .nav-tab-active {
+            background-color: #6D28D9 !important;
+            color: #FCE7F3 !important;
+        }
+
+        /* Dark Mode Surface & Color Overrides */
+        html.dark .text-chibi-brown { color: #FCE7F3 !important; }
+        html.dark .text-chibi-softbrown { color: #C4B5FD !important; }
+        html.dark .border-chibi-brown { border-color: #D8B4FE !important; }
+        html.dark .bg-white { background-color: #2A1F3D !important; color: #FCE7F3; }
+        html.dark .bg-white\/95 { background-color: rgba(42, 31, 61, 0.95) !important; }
+        html.dark .bg-white\/90 { background-color: rgba(56, 43, 82, 0.92) !important; }
+        html.dark .bg-white\/85 { background-color: rgba(31, 22, 46, 0.88) !important; }
+        html.dark .bg-chibi-pink { background-color: #831843 !important; color: #FCE7F3 !important; }
+        html.dark .bg-chibi-mint { background-color: #134E4A !important; color: #CCFBF1 !important; }
+        html.dark .bg-chibi-cream { background-color: #382B52 !important; color: #FCE7F3 !important; }
+        html.dark .bg-sky-50 { background-color: #1E293B !important; }
+        html.dark .bg-sky-100 { background-color: #1E3A5F !important; color: #E0F2FE !important; }
+        html.dark .bg-sky-200 { background-color: #0369A1 !important; color: #E0F2FE !important; }
+        html.dark .bg-purple-50 { background-color: #2E1F47 !important; }
+        html.dark .bg-purple-200 { background-color: #5B21B6 !important; color: #EDE9FE !important; }
+        html.dark .bg-yellow-100 { background-color: #422006 !important; }
+        html.dark .bg-yellow-100:hover { background-color: #713F12 !important; }
+        html.dark .bg-pink-300 { background-color: #BE185D !important; color: #FCE7F3 !important; }
+        html.dark .text-pink-500, html.dark .text-pink-600 { color: #F9A8D4 !important; }
+        html.dark .text-purple-600 { color: #C4B5FD !important; }
+        html.dark .border-gray-200 { border-color: #4C3A6E !important; }
+
+        html.dark .kawaii-header-grad {
+            background: linear-gradient(90deg, #241938 0%, #331D3D 50%, #261C40 100%) !important;
+        }
+        html.dark .kawaii-countdown-grad {
+            background: linear-gradient(90deg, #2F1D3A 0%, #281E42 100%) !important;
+        }
+        html.dark .kawaii-tasbih-grad {
+            background: linear-gradient(180deg, #2F1D3A 0%, #231938 100%) !important;
+        }
+        html.dark .kawaii-spotlight-subuh {
+            background: linear-gradient(180deg, #1E2D45 0%, #2A1F3D 100%) !important;
+        }
+        html.dark .kawaii-spotlight-maghrib {
+            background: linear-gradient(180deg, #32214D 0%, #2A1F3D 100%) !important;
+        }
+        html.dark .day-card-tint {
+            background-color: #2A1F3D !important;
+        }
+        html.dark .day-card-badge {
+            background-color: #432C66 !important;
         }
 
         .pb-safe {
@@ -180,6 +255,10 @@
             </div>
 
             <div class="flex items-center gap-1.5">
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="kawaii-border-sm kawaii-btn bg-chibi-cream text-chibi-brown font-cute text-xs rounded-xl px-2.5 py-1.5 flex items-center gap-1 cursor-pointer" title="Ganti Mode Terang / Gelap" aria-label="Toggle Dark and Light Mode">
+                    <span id="themeToggleIcon">🌙</span>
+                    <span id="themeToggleText" class="hidden md:inline">Dark</span>
+                </button>
                 <select id="timezoneSelect" onchange="changeTimezone(this.value)" class="kawaii-border-sm bg-chibi-cream text-chibi-brown font-cute text-xs rounded-xl px-2 py-1.5 focus:outline-none cursor-pointer">
                     <option value="WIB">WIB</option>
                     <option value="WITA">WITA</option>
@@ -196,7 +275,7 @@
         <div id="pageDashboard" class="space-y-5">
             
             <!-- Header Kartu Chibi Sambutan -->
-            <header class="kawaii-border rounded-3xl bg-gradient-to-r from-[#E0F4FF] via-[#FFF0F6] to-[#F3E5F5] p-4 sm:p-6 relative overflow-hidden">
+            <header class="kawaii-border kawaii-header-grad rounded-3xl bg-gradient-to-r from-[#E0F4FF] via-[#FFF0F6] to-[#F3E5F5] p-4 sm:p-6 relative overflow-hidden">
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center relative z-10">
                     <div class="sm:col-span-3 flex justify-center">
                         <div class="w-24 h-24 sm:w-32 sm:h-32 animate-float">
@@ -265,7 +344,7 @@
                     </div>
                 </div>
 
-                <div class="kawaii-border rounded-3xl bg-gradient-to-r from-[#FFF5F8] to-[#F3E8FF] p-4 flex items-center justify-between">
+                <div class="kawaii-border kawaii-countdown-grad rounded-3xl bg-gradient-to-r from-[#FFF5F8] to-[#F3E8FF] p-4 flex items-center justify-between">
                     <div>
                         <span class="inline-block bg-white border-2 border-chibi-brown font-cute text-xs px-3 py-0.5 rounded-full mb-1 text-purple-600">
                             ⏳ Menuju Sholat Berikutnya
@@ -313,11 +392,42 @@
                 </div>
             </div>
 
+            <!-- Daftar Nama Santri -->
+            <div class="kawaii-border rounded-3xl bg-white/95 p-5">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-9 h-9 rounded-2xl bg-chibi-pink border-2 border-chibi-brown flex items-center justify-center text-lg">🧕</span>
+                        <div>
+                            <h2 class="font-cute text-lg text-chibi-brown">Daftar Nama Santri</h2>
+                            <p class="text-xs font-semibold text-chibi-softbrown">Tambah, edit, atau hapus nama santri mushola</p>
+                        </div>
+                    </div>
+                    <span id="santriCountBadge" class="font-cute text-xs bg-chibi-mint border-2 border-chibi-brown px-3 py-1 rounded-full">
+                        0 Santri
+                    </span>
+                </div>
+
+                <!-- Form Tambah Santri -->
+                <div class="flex flex-col sm:flex-row gap-2 mb-4">
+                    <input id="newSantriInput" type="text" placeholder="Ketik nama santri baru..."
+                        onkeydown="if(event.key==='Enter') addSantri()"
+                        class="flex-1 kawaii-border-sm bg-chibi-cream text-chibi-brown font-semibold text-sm rounded-2xl px-4 py-2.5 focus:outline-none placeholder:opacity-60">
+                    <button onclick="addSantri()" class="kawaii-border-sm kawaii-btn bg-chibi-pink text-chibi-brown font-cute text-xs sm:text-sm px-5 py-2.5 rounded-2xl cursor-pointer">
+                        ➕ Tambah Santri
+                    </button>
+                </div>
+
+                <!-- List Santri -->
+                <div id="santriListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Dirender via JS -->
+                </div>
+            </div>
+
         </div>
 
         <!-- ================= HALAMAN 2: TASBIH & DOA HARIAN ================= -->
         <div id="pageTasbih" class="hidden space-y-5">
-            <div class="kawaii-border rounded-3xl bg-gradient-to-b from-[#FFF5F8] to-[#F3E8FF] p-6 text-center max-w-xl mx-auto relative">
+            <div class="kawaii-border kawaii-tasbih-grad rounded-3xl bg-gradient-to-b from-[#FFF5F8] to-[#F3E8FF] p-6 text-center max-w-xl mx-auto relative">
                 <span class="inline-block bg-white border-2 border-chibi-brown font-cute text-xs px-3 py-1 rounded-full text-pink-500 mb-2">
                     📿 Dzikir Ba'da Sholat Subuh & Maghrib
                 </span>
@@ -479,7 +589,7 @@
             // Render Fokus Hari Ini
             const spotlightEl = document.getElementById('todaySpotlightContainer');
             spotlightEl.innerHTML = `
-                <div class="kawaii-border-sm rounded-2xl bg-gradient-to-b from-[#E8F8FF] to-white p-4 flex flex-col justify-between">
+                <div class="kawaii-border-sm kawaii-spotlight-subuh rounded-2xl bg-gradient-to-b from-[#E8F8FF] to-white p-4 flex flex-col justify-between">
                     <div class="flex items-center justify-between mb-2">
                         <span class="bg-sky-200 border-2 border-chibi-brown font-cute text-xs px-3 py-0.5 rounded-full">🌅 Subuh • ${todayItem.day}</span>
                         <button onclick="toggleCheck(${todayIndex}, 'subuh', event)" class="w-9 h-9 rounded-xl border-2 border-chibi-brown flex items-center justify-center text-base ${todayItem.checkedSubuh ? 'bg-pink-300' : 'bg-white'}">
@@ -494,7 +604,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="kawaii-border-sm rounded-2xl bg-gradient-to-b from-[#F5ECFF] to-white p-4 flex flex-col justify-between">
+                <div class="kawaii-border-sm kawaii-spotlight-maghrib rounded-2xl bg-gradient-to-b from-[#F5ECFF] to-white p-4 flex flex-col justify-between">
                     <div class="flex items-center justify-between mb-2">
                         <span class="bg-purple-200 border-2 border-chibi-brown font-cute text-xs px-3 py-0.5 rounded-full">🌙 Maghrib • ${todayItem.day}</span>
                         <button onclick="toggleCheck(${todayIndex}, 'maghrib', event)" class="w-9 h-9 rounded-xl border-2 border-chibi-brown flex items-center justify-center text-base ${todayItem.checkedMaghrib ? 'bg-pink-300' : 'bg-white'}">
@@ -517,8 +627,8 @@
             scheduleData.forEach((item, idx) => {
                 const isToday = item.day.toLowerCase() === todayName.toLowerCase();
                 cardsHtml += `
-                <div class="kawaii-border-sm rounded-2xl ${item.cardTint} p-3.5 ${isToday ? 'ring-2 ring-pink-400' : ''}">
-                    <div class="flex items-center justify-between ${item.badgeBg} border-2 border-chibi-brown rounded-xl px-3 py-1 mb-2">
+                <div class="kawaii-border-sm day-card-tint rounded-2xl ${item.cardTint} p-3.5 ${isToday ? 'ring-2 ring-pink-400' : ''}">
+                    <div class="flex items-center justify-between day-card-badge ${item.badgeBg} border-2 border-chibi-brown rounded-xl px-3 py-1 mb-2">
                         <span class="font-cute text-sm text-chibi-brown font-bold">${item.day}</span>
                         ${isToday ? '<span class="bg-pink-400 text-white text-[10px] font-cute px-2 py-0.5 rounded-full border border-chibi-brown">Hari Ini</span>' : ''}
                     </div>
@@ -646,9 +756,180 @@
             toastTimer = setTimeout(() => t.classList.add('translate-y-24', 'opacity-0'), 2300);
         }
 
+        const THEME_KEY = 'theme_chibi_simple_v1';
+
+        function applyTheme(theme) {
+            const isDark = theme === 'dark';
+            document.documentElement.classList.toggle('dark', isDark);
+            const iconEl = document.getElementById('themeToggleIcon');
+            const textEl = document.getElementById('themeToggleText');
+            if (iconEl) iconEl.innerText = isDark ? '☀️' : '🌙';
+            if (textEl) textEl.innerText = isDark ? 'Light' : 'Dark';
+        }
+
+        function initTheme() {
+            let savedTheme = null;
+            try {
+                savedTheme = localStorage.getItem(THEME_KEY);
+            } catch (e) {}
+            if (!savedTheme) {
+                savedTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            applyTheme(savedTheme);
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const nextTheme = isDark ? 'light' : 'dark';
+            applyTheme(nextTheme);
+            try {
+                localStorage.setItem(THEME_KEY, nextTheme);
+            } catch (e) {}
+            showToast(nextTheme === 'dark' ? 'Mode Gelap aktif! 🌙' : 'Mode Terang aktif! ☀️');
+        }
+
+        const SANTRI_KEY = 'daftar_santri_chibi_v1';
+        const defaultSantriList = ['Aisyah Putri', 'Fatimah Az-Zahra', 'Khadijah Nur'];
+        let santriList = [];
+        let editingSantriIndex = -1;
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function loadSantri() {
+            try {
+                const saved = localStorage.getItem(SANTRI_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    santriList = Array.isArray(parsed) ? parsed : [...defaultSantriList];
+                } else {
+                    santriList = [...defaultSantriList];
+                }
+            } catch (e) {
+                santriList = [...defaultSantriList];
+            }
+        }
+
+        function saveSantri() {
+            try {
+                localStorage.setItem(SANTRI_KEY, JSON.stringify(santriList));
+            } catch (e) {}
+        }
+
+        function renderSantriList() {
+            const container = document.getElementById('santriListContainer');
+            const badge = document.getElementById('santriCountBadge');
+            if (!container || !badge) return;
+
+            badge.innerText = `${santriList.length} Santri`;
+
+            if (santriList.length === 0) {
+                container.innerHTML = `
+                    <div class="sm:col-span-2 text-center py-6 kawaii-border-sm rounded-2xl bg-chibi-cream">
+                        <p class="font-cute text-sm text-chibi-softbrown">Belum ada nama santri. Yuk tambahkan di atas! 🌸</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = santriList.map((name, idx) => {
+                if (editingSantriIndex === idx) {
+                    return `
+                    <div class="kawaii-border-sm rounded-2xl bg-chibi-cream p-3 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-xl bg-chibi-pink border-2 border-chibi-brown font-cute text-xs flex items-center justify-center flex-shrink-0">${idx + 1}</span>
+                        <input id="editSantriInput-${idx}" type="text" value="${escapeHtml(name)}"
+                            onkeydown="if(event.key==='Enter') saveEditSantri(${idx}); if(event.key==='Escape') cancelEditSantri();"
+                            class="flex-1 min-w-0 bg-white border-2 border-chibi-brown rounded-xl px-2.5 py-1 text-sm font-semibold text-chibi-brown focus:outline-none">
+                        <button onclick="saveEditSantri(${idx})" class="kawaii-border-sm bg-chibi-mint text-chibi-brown font-cute text-xs px-2.5 py-1 rounded-xl cursor-pointer" title="Simpan">💾</button>
+                        <button onclick="cancelEditSantri()" class="kawaii-border-sm bg-white text-chibi-brown font-cute text-xs px-2.5 py-1 rounded-xl cursor-pointer" title="Batal">✖️</button>
+                    </div>`;
+                }
+                return `
+                <div class="kawaii-border-sm rounded-2xl bg-chibi-cream p-3 flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="w-8 h-8 rounded-xl bg-chibi-pink border-2 border-chibi-brown font-cute text-xs flex items-center justify-center flex-shrink-0">${idx + 1}</span>
+                        <span class="font-cute text-sm text-chibi-brown truncate">${escapeHtml(name)}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <button onclick="startEditSantri(${idx})" class="kawaii-border-sm kawaii-btn bg-sky-100 text-chibi-brown font-cute text-xs px-2.5 py-1 rounded-xl cursor-pointer" title="Edit nama">✏️ Edit</button>
+                        <button onclick="deleteSantri(${idx})" class="kawaii-border-sm kawaii-btn bg-pink-300 text-chibi-brown font-cute text-xs px-2.5 py-1 rounded-xl cursor-pointer" title="Hapus santri">🗑️ Hapus</button>
+                    </div>
+                </div>`;
+            }).join('');
+
+            if (editingSantriIndex !== -1) {
+                const input = document.getElementById(`editSantriInput-${editingSantriIndex}`);
+                if (input) {
+                    input.focus();
+                    input.setSelectionRange(input.value.length, input.value.length);
+                }
+            }
+        }
+
+        function addSantri() {
+            const input = document.getElementById('newSantriInput');
+            if (!input) return;
+            const name = input.value.trim();
+            if (!name) {
+                showToast('Nama santri tidak boleh kosong! 🌸');
+                input.focus();
+                return;
+            }
+            santriList.push(name);
+            input.value = '';
+            editingSantriIndex = -1;
+            saveSantri();
+            renderSantriList();
+            showToast(`Santri "${name}" ditambahkan! 🧕`);
+        }
+
+        function startEditSantri(idx) {
+            editingSantriIndex = idx;
+            renderSantriList();
+        }
+
+        function saveEditSantri(idx) {
+            const input = document.getElementById(`editSantriInput-${idx}`);
+            if (!input) return;
+            const newName = input.value.trim();
+            if (!newName) {
+                showToast('Nama santri tidak boleh kosong! 🌸');
+                input.focus();
+                return;
+            }
+            santriList[idx] = newName;
+            editingSantriIndex = -1;
+            saveSantri();
+            renderSantriList();
+            showToast('Nama santri diperbarui! ✏️');
+        }
+
+        function cancelEditSantri() {
+            editingSantriIndex = -1;
+            renderSantriList();
+        }
+
+        function deleteSantri(idx) {
+            const removed = santriList[idx];
+            santriList.splice(idx, 1);
+            if (editingSantriIndex === idx) editingSantriIndex = -1;
+            else if (editingSantriIndex > idx) editingSantriIndex--;
+            saveSantri();
+            renderSantriList();
+            showToast(`Santri "${removed}" dihapus! 🗑️`);
+        }
+
         window.onload = function() {
+            initTheme();
             loadState();
             renderApp();
+            loadSantri();
+            renderSantriList();
             setInterval(updateClockAndCountdown, 1000);
         };
     </script>
