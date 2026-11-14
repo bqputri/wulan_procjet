@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Sholat Mushola & Tasbih - Chibi Muslimah Cute</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Quicksand -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        chibi: {
+                            brown: '#5D4037',
+                            softbrown: '#8D6E63',
+                            pink: '#FFD1DC',
+                            deeppink: '#FF8DA1',
+                            lilac: '#E6D7FF',
+                            deeplilac: '#B39DDB',
+                            mint: '#D4F8E8',
+                            deepmint: '#80CBC4',
+                            cream: '#FFF9E6',
+                            peach: '#FFE0CC',
+                            sky: '#D8F3FF'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        quicksand: ['Quicksand', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --outline-brown: #5D4037;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            color: #5D4037;
+            background: linear-gradient(135deg, #FFF0F5 0%, #F3E8FF 50%, #E8F8F5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-cute {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .kawaii-border {
+            border: 3px solid #5D4037;
+            box-shadow: 0 6px 0 #5D4037;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .kawaii-border-sm {
+            border: 2.5px solid #5D4037;
+            box-shadow: 0 4px 0 #5D4037;
+            transition: all 0.18s ease;
+        }
+
+        .kawaii-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #5D4037;
+        }
+
+        .kawaii-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #5D4037;
+        }
+
+        .sticker-svg {
+            filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 4px 4px rgba(93, 64, 55, 0.15));
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        .bg-polka-pink {
+            background-color: #FFF5F8;
+            background-image: radial-gradient(#FFD1DC 1.5px, transparent 1.5px);
+            background-size: 16px 16px;
+        }
+
+        .bg-polka-lilac {
+            background-color: #F8F4FF;
+            background-image: radial-gradient(#E6D7FF 1.5px, transparent 1.5px);
+            background-size: 16px 16px;
+        }
+
+        .sparkle-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: popOut 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes popOut {
+            0% { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1.1) rotate(var(--rot)); opacity: 0; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFB7B2;
+            border-radius: 9999px;
+            border: 2px solid #5D4037;
+        }
+
+        .nav-tab-active {
+            background-color: #FFD1DC !important;
+            color: #5D4037 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 0 #5D4037 !important;
+        }
+
+        .pb-safe {
+            padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+        }
+    </style>
+</head>
+<body class="relative pb-safe lg:pb-10 selection:bg-pink-200 selection:text-chibi-brown">
+
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <svg class="absolute top-10 left-6 w-10 h-10 text-pink-300 animate-float opacity-70" viewBox="0 0 64 64" fill="currentColor">
+            <path d="M32 6C26 6 23 14 23 19C18 15 10 15 7 21C4 27 11 33 16 35C11 38 7 45 12 51C17 57 25 52 28 47C30 53 37 58 43 53C49 48 45 40 41 37C47 36 55 31 53 24C51 17 42 17 38 20C39 14 38 6 32 6Z"/>
+            <circle cx="32" cy="32" r="5" fill="#FFF9E6"/>
+        </svg>
+    </div>
+
+    <nav class="sticky top-0 z-40 backdrop-blur-md bg-white/85 border-b-3 border-chibi-brown px-3 sm:px-6 py-2.5 shadow-sm">
+        <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-2xl bg-chibi-pink kawaii-border-sm flex items-center justify-center text-xl flex-shrink-0">
+                    🕌
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-cute text-sm sm:text-base text-chibi-brown font-bold leading-none" id="topBarMusholaName">Mushola Al-Ukhuwah</span>
+                        <span class="bg-chibi-mint border border-chibi-brown text-[10px] font-cute px-2 py-0.5 rounded-full">
+                            🌸 Cute Chibi
+                        </span>
+                    </div>
+                    <p class="text-[11px] font-semibold text-chibi-softbrown flex items-center gap-1 mt-0.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 border border-chibi-brown inline-block animate-pulse"></span>
+                        <span>Subuh & Maghrib</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Menu Navigasi Desktop -->
+            <div class="hidden sm:flex items-center gap-2">
+                <button onclick="switchPage('dashboard')" id="deskTab-dashboard" class="nav-tab-active kawaii-border-sm px-4 py-1.5 rounded-2xl font-cute text-xs bg-white text-chibi-brown flex items-center gap-1.5 transition">
+                    <span>🏠</span> Dashboard Utama
+                </button>
+                <button onclick="switchPage('tasbih')" id="deskTab-tasbih" class="kawaii-border-sm px-4 py-1.5 rounded-2xl font-cute text-xs bg-white text-chibi-brown flex items-center gap-1.5 transition">
+                    <span>📿</span> Tasbih & Doa Harian
+                </button>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+                <select id="timezoneSelect" onchange="changeTimezone(this.value)" class="kawaii-border-sm bg-chibi-cream text-chibi-brown font-cute text-xs rounded-xl px-2 py-1.5 focus:outline-none cursor-pointer">
+                    <option value="WIB">WIB</option>
+                    <option value="WITA">WITA</option>
+                    <option value="WIT">WIT</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Kontainer Halaman Utama -->
+    <div class="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 pt-4 sm:pt-6">
+
+        <!-- ================= HALAMAN 1: DASHBOARD UTAMA ================= -->
+        <div id="pageDashboard" class="space-y-5">
+            
+            <!-- Header Kartu Chibi Sambutan -->
+            <header class="kawaii-border rounded-3xl bg-gradient-to-r from-[#E0F4FF] via-[#FFF0F6] to-[#F3E5F5] p-4 sm:p-6 relative overflow-hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center relative z-10">
+                    <div class="sm:col-span-3 flex justify-center">
+                        <div class="w-24 h-24 sm:w-32 sm:h-32 animate-float">
+                            <svg viewBox="0 0 200 200" class="w-full h-full sticker-svg">
+                                <circle cx="100" cy="105" r="76" fill="#D8F3FF" stroke="#5D4037" stroke-width="4"/>
+                                <path id="headerMukenaBody" d="M48 175 C50 115 70 95 100 95 C130 95 150 115 152 175 Z" fill="#FFD1DC" stroke="#5D4037" stroke-width="4" stroke-linejoin="round"/>
+                                <circle id="headerMukenaHead" cx="100" cy="88" r="46" fill="#FFD1DC" stroke="#5D4037" stroke-width="4"/>
+                                <circle cx="100" cy="90" r="35" fill="#FFF5EE" stroke="#5D4037" stroke-width="4"/>
+                                <ellipse cx="84" cy="92" rx="6.5" ry="7.5" fill="#5D4037"/>
+                                <circle cx="82" cy="89" r="2.8" fill="#FFFFFF"/>
+                                <ellipse cx="116" cy="92" rx="6.5" ry="7.5" fill="#5D4037"/>
+                                <circle cx="114" cy="89" r="2.8" fill="#FFFFFF"/>
+                                <ellipse cx="73" cy="101" rx="6" ry="3.5" fill="#FF8DA1" opacity="0.65"/>
+                                <ellipse cx="127" cy="101" rx="6" ry="3.5" fill="#FF8DA1" opacity="0.65"/>
+                                <path d="M94 101 Q100 108 106 101" fill="none" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-6 text-center">
+                        <span class="inline-flex items-center gap-1.5 bg-white/90 kawaii-border-sm px-3.5 py-1 rounded-full text-xs font-bold text-pink-500 mb-2">
+                            🌸 JADWAL SHOLAT SUBUH & MAGHRIB 🌸
+                        </span>
+                        <h1 id="musholaName" contenteditable="true" spellcheck="false"
+                            class="text-2xl sm:text-3xl font-bold text-chibi-brown tracking-wide px-3 py-1 rounded-2xl hover:bg-white/70 focus:bg-white focus:outline-none cursor-pointer"
+                            title="Klik untuk ubah nama mushola">
+                            Mushola Al-Ukhuwah
+                        </h1>
+                        <p class="text-xs sm:text-sm font-semibold text-chibi-softbrown mt-1">
+                            Pusat Ibadah Harian dengan Tema Chibi Muslimah Cute ✨
+                        </p>
+                    </div>
+                    <div class="sm:col-span-3 flex justify-center">
+                        <div class="w-24 h-24 sm:w-32 sm:h-32 animate-float" style="animation-delay: 1.5s;">
+                            <svg viewBox="0 0 200 200" class="w-full h-full sticker-svg">
+                                <circle cx="100" cy="105" r="76" fill="#E6D7FF" stroke="#5D4037" stroke-width="4"/>
+                                <path d="M48 175 C50 115 70 95 100 95 C130 95 150 115 152 175 Z" fill="#D1C4E9" stroke="#5D4037" stroke-width="4" stroke-linejoin="round"/>
+                                <circle cx="100" cy="88" r="46" fill="#D1C4E9" stroke="#5D4037" stroke-width="4"/>
+                                <circle cx="100" cy="90" r="35" fill="#FFF5EE" stroke="#5D4037" stroke-width="4"/>
+                                <ellipse cx="84" cy="92" rx="6.5" ry="7.5" fill="#5D4037"/>
+                                <circle cx="82" cy="89" r="2.8" fill="#FFFFFF"/>
+                                <ellipse cx="116" cy="92" rx="6.5" ry="7.5" fill="#5D4037"/>
+                                <circle cx="114" cy="89" r="2.8" fill="#FFFFFF"/>
+                                <ellipse cx="73" cy="101" rx="6" ry="3.5" fill="#FF8DA1" opacity="0.65"/>
+                                <ellipse cx="127" cy="101" rx="6" ry="3.5" fill="#FF8DA1" opacity="0.65"/>
+                                <path d="M94 101 Q100 108 106 101" fill="none" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Baris Widget Ringkasan Waktu & Hitung Mundur -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="kawaii-border rounded-3xl bg-white/95 p-4 flex items-center justify-between">
+                    <div>
+                        <span id="liveDayBadge" class="inline-block bg-chibi-pink border-2 border-chibi-brown font-cute text-xs px-3 py-0.5 rounded-full mb-1">
+                            🌸 Hari Ini: Minggu
+                        </span>
+                        <div id="liveClock" class="font-cute text-2xl sm:text-3xl text-chibi-brown tracking-wider">
+                            00:00:00 WIB
+                        </div>
+                        <p id="liveDateText" class="text-xs font-bold text-chibi-softbrown mt-0.5">Memuat tanggal...</p>
+                    </div>
+                    <div class="w-14 h-14 rounded-2xl bg-sky-100 border-2 border-chibi-brown flex items-center justify-center text-3xl animate-float">
+                        🕰️
+                    </div>
+                </div>
+
+                <div class="kawaii-border rounded-3xl bg-gradient-to-r from-[#FFF5F8] to-[#F3E8FF] p-4 flex items-center justify-between">
+                    <div>
+                        <span class="inline-block bg-white border-2 border-chibi-brown font-cute text-xs px-3 py-0.5 rounded-full mb-1 text-purple-600">
+                            ⏳ Menuju Sholat Berikutnya
+                        </span>
+                        <div id="nextPrayerName" class="font-cute text-lg sm:text-xl text-chibi-brown">Sholat Subuh (04:15)</div>
+                        <p id="nextPrayerCountdown" class="text-xs font-bold text-pink-600 bg-white/90 inline-block px-2.5 py-0.5 rounded-lg border border-chibi-brown mt-1">Hitung mundur aktif...</p>
+                    </div>
+                    <button onclick="playCuteBell()" class="kawaii-border-sm kawaii-btn w-12 h-12 rounded-2xl bg-yellow-100 hover:bg-yellow-200 flex items-center justify-center text-2xl" title="Tes Bunyi">
+                        🔔
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sorotan Hari Ini & Ceklis Sholat -->
+            <div class="kawaii-border rounded-3xl bg-white/95 p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-9 h-9 rounded-2xl bg-chibi-pink border-2 border-chibi-brown flex items-center justify-center text-lg">🌟</span>
+                        <div>
+                            <h2 class="font-cute text-lg text-chibi-brown">Fokus Sholat Hari Ini</h2>
+                            <p id="dashboardTodaySubtext" class="text-xs font-semibold text-chibi-softbrown">Ceklis Subuh & Maghrib hari ini</p>
+                        </div>
+                    </div>
+                    <span id="trackerCountBadge" class="font-cute text-xs bg-chibi-mint border-2 border-chibi-brown px-3 py-1 rounded-full">
+                        0 / 14 Sholat
+                    </span>
+                </div>
+                <div id="todaySpotlightContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dirender via JS -->
+                </div>
+            </div>
+
+            <!-- Jadwal Lengkap 7 Hari (Senin - Minggu) -->
+            <div class="kawaii-border rounded-3xl bg-white/95 p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-cute text-lg text-chibi-brown flex items-center gap-2">
+                        <span>📅</span> Jadwal Lengkap Sholat 7 Hari
+                    </h2>
+                    <button onclick="copyScheduleToClipboard()" class="kawaii-border-sm kawaii-btn bg-sky-100 text-chibi-brown font-cute text-xs px-3 py-1.5 rounded-xl">
+                        📋 Salin ke WhatsApp
+                    </button>
+                </div>
+                <div id="viewCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dirender via JS -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= HALAMAN 2: TASBIH & DOA HARIAN ================= -->
+        <div id="pageTasbih" class="hidden space-y-5">
+            <div class="kawaii-border rounded-3xl bg-gradient-to-b from-[#FFF5F8] to-[#F3E8FF] p-6 text-center max-w-xl mx-auto relative">
+                <span class="inline-block bg-white border-2 border-chibi-brown font-cute text-xs px-3 py-1 rounded-full text-pink-500 mb-2">
+                    📿 Dzikir Ba'da Sholat Subuh & Maghrib
+                </span>
+                <h2 class="font-cute text-2xl text-chibi-brown mb-2">Tasbih Mutiara Chibi</h2>
+
+                <div class="flex justify-center gap-2 my-3">
+                    <button onclick="setDzikirPhrase('Subhanallah', 33)" id="dzikirBtn1" class="kawaii-border-sm px-3 py-1.5 rounded-xl font-cute text-xs bg-chibi-pink">
+                        Subhanallah (33x)
+                    </button>
+                    <button onclick="setDzikirPhrase('Alhamdulillah', 33)" id="dzikirBtn2" class="kawaii-border-sm px-3 py-1.5 rounded-xl font-cute text-xs bg-white">
+                        Alhamdulillah (33x)
+                    </button>
+                    <button onclick="setDzikirPhrase('Allahu Akbar', 33)" id="dzikirBtn3" class="kawaii-border-sm px-3 py-1.5 rounded-xl font-cute text-xs bg-white">
+                        Allahu Akbar (33x)
+                    </button>
+                </div>
+
+                <div class="bg-white kawaii-border-sm rounded-3xl p-5 my-4">
+                    <p id="tasbihPhraseLabel" class="font-cute text-lg text-purple-600 mb-1">Subhanallah</p>
+                    <div id="tasbihCounterDisplay" class="font-cute text-6xl text-chibi-brown my-2">0</div>
+                    <p id="tasbihTargetLabel" class="text-xs font-bold text-chibi-softbrown">Target: 33 kali</p>
+                </div>
+
+                <div class="flex items-center justify-center gap-3 mt-4">
+                    <button onclick="resetTasbih()" class="kawaii-border-sm kawaii-btn bg-white text-chibi-brown font-cute text-xs px-5 py-3 rounded-2xl">
+                        🔄 Ulangi
+                    </button>
+                    <button onclick="incrementTasbih(event)" class="kawaii-border kawaii-btn bg-chibi-pink hover:bg-pink-300 text-chibi-brown font-cute text-base px-8 py-3 rounded-2xl flex-1">
+                        ✨ Tekan Dzikir (+1)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel Doa Pagi & Petang -->
+            <div class="kawaii-border rounded-3xl bg-white p-6 max-w-xl mx-auto space-y-4">
+                <h3 class="font-cute text-xl text-chibi-brown flex items-center gap-2">
+                    <span>🤲</span> Doa Pagi & Petang
+                </h3>
+                <div class="bg-sky-50 kawaii-border-sm rounded-2xl p-4">
+                    <span class="inline-block bg-sky-200 border border-chibi-brown font-cute text-xs px-2.5 py-0.5 rounded-full mb-1.5">
+                        🌅 Doa Pagi Setelah Subuh
+                    </span>
+                    <p class="font-cute text-sm text-chibi-brown mb-1">
+                        "Allahumma inni as'aluka 'ilman nafi'an, wa rizqan thayyiban, wa 'amalan mutaqabbalan."
+                    </p>
+                    <p class="text-xs font-semibold text-chibi-softbrown">Artinya: "Ya Allah, sesungguhnya aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang baik, dan amal yang diterima."</p>
+                </div>
+
+                <div class="bg-purple-50 kawaii-border-sm rounded-2xl p-4">
+                    <span class="inline-block bg-purple-200 border border-chibi-brown font-cute text-xs px-2.5 py-0.5 rounded-full mb-1.5">
+                        🌙 Doa Petang Saat Maghrib
+                    </span>
+                    <p class="font-cute text-sm text-chibi-brown mb-1">
+                        "Allahumma bika amsaynaa wa bika ashbahnaa wa bika nahyaa wa bika namuutu wa ilaikan nusyuur."
+                    </p>
+                    <p class="text-xs font-semibold text-chibi-softbrown">Artinya: "Ya Allah, dengan rahmat dan pertolongan-Mu kami memasuki waktu petang dan pagi..."</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation Bar Mobile -->
+    <nav class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t-3 border-chibi-brown px-3 py-2 shadow-lg">
+        <div class="max-w-md mx-auto grid grid-cols-2 gap-2">
+            <button onclick="switchPage('dashboard')" id="mobTab-dashboard" class="nav-tab-active kawaii-border-sm rounded-2xl py-2 flex flex-col items-center justify-center bg-white text-chibi-brown">
+                <span class="text-lg">🏠</span>
+                <span class="font-cute text-xs mt-0.5">Dashboard</span>
+            </button>
+            <button onclick="switchPage('tasbih')" id="mobTab-tasbih" class="kawaii-border-sm rounded-2xl py-2 flex flex-col items-center justify-center bg-white text-chibi-brown">
+                <span class="text-lg">📿</span>
+                <span class="font-cute text-xs mt-0.5">Tasbih & Doa</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Toast Notifikasi -->
+    <div id="kawaiiToast" class="fixed bottom-16 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="kawaii-border-sm bg-white px-4 py-2.5 rounded-2xl flex items-center gap-2">
+            <span class="text-xl">✨</span>
+            <span id="toastText" class="font-cute text-sm text-chibi-brown">Tersimpan!</span>
+        </div>
+    </div>
+
+    <script>
+        const defaultScheduleData = [
+            { id: 'senin', day: 'Senin', badgeBg: 'bg-[#FFD1DC]', cardTint: 'bg-[#FFF5F7]', subuhTime: '04:15 WIB', subuhIcon: '🌷', subuhColor: '#FF8DA1', subuhDesc: 'Chibi muslimah mukena baby pink sakura.', maghribTime: '17:45 WIB', maghribIcon: '🌇', maghribColor: '#FFB7B2', maghribDesc: 'Chibi muslimah gamis peach senja.', checkedSubuh: false, checkedMaghrib: false },
+            { id: 'selasa', day: 'Selasa', badgeBg: 'bg-[#D8F3FF]', cardTint: 'bg-[#F4FBFF]', subuhTime: '04:15 WIB', subuhIcon: '💧', subuhColor: '#81D4FA', subuhDesc: 'Chibi muslimah wudhu fajar.', maghribTime: '17:45 WIB', maghribIcon: '🎀', maghribColor: '#F48FB1', maghribDesc: 'Chibi muslimah tersenyum di teras.', checkedSubuh: false, checkedMaghrib: false },
+            { id: 'rabu', day: 'Rabu', badgeBg: 'bg-[#D4F8E8]', cardTint: 'bg-[#F2FDF8]', subuhTime: '04:15 WIB', subuhIcon: '🤲', subuhColor: '#80CBC4', subuhDesc: 'Chibi muslimah berdoa khusyuk.', maghribTime: '17:45 WIB', maghribIcon: '🌙', maghribColor: '#CE93D8', maghribDesc: 'Chibi muslimah tas kelinci.', checkedSubuh: false, checkedMaghrib: false },
+            { id: 'kamis', day: 'Kamis', badgeBg: 'bg-[#FFF9E6]', cardTint: 'bg-[#FFFEF7]', subuhTime: '04:15 WIB', subuhIcon: '☀️', subuhColor: '#FFE082', subuhDesc: 'Chibi muslimah buka jendela.', maghribTime: '17:45 WIB', maghribIcon: '📿', maghribColor: '#B39DDB', maghribDesc: 'Chibi muslimah tasbih mutiara.', checkedSubuh: false, checkedMaghrib: false },
+            { id: 'jumat', day: 'Jumat', badgeBg: 'bg-[#E6D7FF]', cardTint: 'bg-[#FAF6FF]', subuhTime: '04:15 WIB', subuhIcon: '✨', subuhColor: '#FFF59D', subuhDesc: 'Chibi muslimah mukena putih bersih.', maghribTime: '17:45 WIB', maghribIcon: '🏮', maghribColor: '#FFAB91', maghribDesc: 'Chibi muslimah bawa lentera.', checkedSubuh: false, checkedMaghrib: false },
+            { id: 'sabtu', day: 'Sabtu', badgeBg: 'bg-[#FFE0CC]', cardTint: 'bg-[#FFF8F4]', subuhTime: '04:15 WIB', subuhIcon: '🐦', subuhColor: '#FFF176', subuhDesc: 'Chibi muslimah sapa burung.', maghribTime: '17:45 WIB', maghribIcon: '🤝', maghribColor: '#F8BBD0', maghribDesc: 'Chibi muslimah bersalaman.', checkedSubuh: false, checkedMaghrib: false },
+            { id: 'minggu', day: 'Minggu', badgeBg: 'bg-[#FFD1DC]', cardTint: 'bg-[#FFF5F8]', subuhTime: '04:15 WIB', subuhIcon: '🌱', subuhColor: '#A5D6A7', subuhDesc: 'Chibi muslimah siram bunga.', maghribTime: '17:45 WIB', maghribIcon: '⭐', maghribColor: '#9FA8DA', maghribDesc: 'Chibi muslimah malam berbintang.', checkedSubuh: false, checkedMaghrib: false }
+        ];
+
+        let scheduleData = [];
+        let selectedTimezone = 'WIB';
+        const STORAGE_KEY = 'jadwal_mushola_chibi_simple_v1';
+        const MUSHOLA_NAME_KEY = 'nama_mushola_chibi_simple_v1';
+
+        function createMiniChibiSVG(hijabColor, accessoryEmoji) {
+            return `
+            <svg viewBox="0 0 100 100" class="w-12 h-12 flex-shrink-0 sticker-svg">
+                <circle cx="50" cy="52" r="42" fill="#E1F5FE" stroke="#5D4037" stroke-width="3"/>
+                <path d="M20 90 C22 65 35 58 50 58 C65 58 78 65 80 90 Z" fill="${hijabColor}" stroke="#5D4037" stroke-width="3" stroke-linejoin="round"/>
+                <circle cx="50" cy="48" r="27" fill="${hijabColor}" stroke="#5D4037" stroke-width="3"/>
+                <circle cx="50" cy="50" r="20" fill="#FFF5EE" stroke="#5D4037" stroke-width="2.8"/>
+                <circle cx="41" cy="51" r="3.6" fill="#5D4037"/>
+                <circle cx="59" cy="51" r="3.6" fill="#5D4037"/>
+                <ellipse cx="35" cy="56" rx="3.5" ry="2" fill="#FF8DA1" opacity="0.7"/>
+                <ellipse cx="65" cy="56" rx="3.5" ry="2" fill="#FF8DA1" opacity="0.7"/>
+                <path d="M46 56 Q50 60 54 56" fill="none" stroke="#5D4037" stroke-width="2.2" stroke-linecap="round"/>
+                <text x="75" y="28" font-size="16" text-anchor="middle">${accessoryEmoji}</text>
+            </svg>`;
+        }
+
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) scheduleData = JSON.parse(saved);
+                else scheduleData = JSON.parse(JSON.stringify(defaultScheduleData));
+
+                const savedName = localStorage.getItem(MUSHOLA_NAME_KEY);
+                if (savedName) {
+                    document.getElementById('musholaName').innerText = savedName;
+                    document.getElementById('topBarMusholaName').innerText = savedName;
+                }
+            } catch (e) {
+                scheduleData = JSON.parse(JSON.stringify(defaultScheduleData));
+            }
+        }
+
+        function saveState(msg = 'Tersimpan otomatis! 🌸') {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(scheduleData));
+                showToast(msg);
+            } catch (e) {}
+        }
+
+        document.getElementById('musholaName').addEventListener('blur', function() {
+            const newName = this.innerText.trim() || 'Mushola Al-Ukhuwah';
+            this.innerText = newName;
+            document.getElementById('topBarMusholaName').innerText = newName;
+            localStorage.setItem(MUSHOLA_NAME_KEY, newName);
+            showToast('Nama mushola diperbarui! 🕌');
+        });
+
+        function getTodayIndonesianName() {
+            const daysMap = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            return daysMap[new Date().getDay()];
+        }
+
+        function renderApp() {
+            const todayName = getTodayIndonesianName();
+            let todayIndex = scheduleData.findIndex(d => d.day.toLowerCase() === todayName.toLowerCase());
+            if (todayIndex === -1) todayIndex = 0;
+            const todayItem = scheduleData[todayIndex];
+
+            // Render Fokus Hari Ini
+            const spotlightEl = document.getElementById('todaySpotlightContainer');
+            spotlightEl.innerHTML = `
+                <div class="kawaii-border-sm rounded-2xl bg-gradient-to-b from-[#E8F8FF] to-white p-4 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-sky-200 border-2 border-chibi-brown font-cute text-xs px-3 py-0.5 rounded-full">🌅 Subuh • ${todayItem.day}</span>
+                        <button onclick="toggleCheck(${todayIndex}, 'subuh', event)" class="w-9 h-9 rounded-xl border-2 border-chibi-brown flex items-center justify-center text-base ${todayItem.checkedSubuh ? 'bg-pink-300' : 'bg-white'}">
+                            ${todayItem.checkedSubuh ? '💖' : '🤍'}
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        ${createMiniChibiSVG(todayItem.subuhColor, todayItem.subuhIcon)}
+                        <div>
+                            <span contenteditable="true" onblur="updateTime(${todayIndex}, 'subuh', this.innerText)" class="font-cute text-xl text-chibi-brown bg-white px-2.5 py-0.5 rounded-xl border-2 border-chibi-brown cursor-pointer">${todayItem.subuhTime}</span>
+                            <p class="text-xs text-chibi-softbrown mt-1">${todayItem.subuhDesc}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kawaii-border-sm rounded-2xl bg-gradient-to-b from-[#F5ECFF] to-white p-4 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-purple-200 border-2 border-chibi-brown font-cute text-xs px-3 py-0.5 rounded-full">🌙 Maghrib • ${todayItem.day}</span>
+                        <button onclick="toggleCheck(${todayIndex}, 'maghrib', event)" class="w-9 h-9 rounded-xl border-2 border-chibi-brown flex items-center justify-center text-base ${todayItem.checkedMaghrib ? 'bg-pink-300' : 'bg-white'}">
+                            ${todayItem.checkedMaghrib ? '💖' : '🤍'}
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        ${createMiniChibiSVG(todayItem.subuhColor, todayItem.maghribIcon)}
+                        <div>
+                            <span contenteditable="true" onblur="updateTime(${todayIndex}, 'maghrib', this.innerText)" class="font-cute text-xl text-chibi-brown bg-white px-2.5 py-0.5 rounded-xl border-2 border-chibi-brown cursor-pointer">${todayItem.maghribTime}</span>
+                            <p class="text-xs text-chibi-softbrown mt-1">${todayItem.maghribDesc}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Render Kartu 7 Hari
+            const cardsEl = document.getElementById('viewCardsContainer');
+            let cardsHtml = '';
+            scheduleData.forEach((item, idx) => {
+                const isToday = item.day.toLowerCase() === todayName.toLowerCase();
+                cardsHtml += `
+                <div class="kawaii-border-sm rounded-2xl ${item.cardTint} p-3.5 ${isToday ? 'ring-2 ring-pink-400' : ''}">
+                    <div class="flex items-center justify-between ${item.badgeBg} border-2 border-chibi-brown rounded-xl px-3 py-1 mb-2">
+                        <span class="font-cute text-sm text-chibi-brown font-bold">${item.day}</span>
+                        ${isToday ? '<span class="bg-pink-400 text-white text-[10px] font-cute px-2 py-0.5 rounded-full border border-chibi-brown">Hari Ini</span>' : ''}
+                    </div>
+                    <div class="flex justify-between items-center text-xs font-semibold py-1 border-b border-gray-200">
+                        <span>🌅 Subuh: <b class="font-cute">${item.subuhTime}</b></span>
+                        <button onclick="toggleCheck(${idx}, 'subuh', event)" class="px-2 py-0.5 rounded-lg border border-chibi-brown text-xs ${item.checkedSubuh ? 'bg-pink-300' : 'bg-white'}">${item.checkedSubuh ? '💖 Selesai' : '🤍 Belum'}</button>
+                    </div>
+                    <div class="flex justify-between items-center text-xs font-semibold py-1 mt-1">
+                        <span>🌙 Maghrib: <b class="font-cute">${item.maghribTime}</b></span>
+                        <button onclick="toggleCheck(${idx}, 'maghrib', event)" class="px-2 py-0.5 rounded-lg border border-chibi-brown text-xs ${item.checkedMaghrib ? 'bg-pink-300' : 'bg-white'}">${item.checkedMaghrib ? '💖 Selesai' : '🤍 Belum'}</button>
+                    </div>
+                </div>`;
+            });
+            cardsEl.innerHTML = cardsHtml;
+
+            // Update Progress Badge
+            let completed = 0;
+            scheduleData.forEach(i => { if (i.checkedSubuh) completed++; if (i.checkedMaghrib) completed++; });
+            document.getElementById('trackerCountBadge').innerText = `${completed} / 14 Sholat`;
+        }
+
+        function updateTime(index, type, val) {
+            const cleaned = val.trim() || (type === 'subuh' ? '04:15 WIB' : '17:45 WIB');
+            if (type === 'subuh') scheduleData[index].subuhTime = cleaned;
+            else scheduleData[index].maghribTime = cleaned;
+            saveState('Jam sholat diperbarui!');
+            renderApp();
+        }
+
+        function toggleCheck(index, type, event) {
+            if (type === 'subuh') scheduleData[index].checkedSubuh = !scheduleData[index].checkedSubuh;
+            else scheduleData[index].checkedMaghrib = !scheduleData[index].checkedMaghrib;
+            saveState('Progress sholat dicatat! 💖');
+            renderApp();
+        }
+
+        function switchPage(page) {
+            const dash = document.getElementById('pageDashboard');
+            const tasbih = document.getElementById('pageTasbih');
+            const deskDash = document.getElementById('deskTab-dashboard');
+            const deskTasbih = document.getElementById('deskTab-tasbih');
+            const mobDash = document.getElementById('mobTab-dashboard');
+            const mobTasbih = document.getElementById('mobTab-tasbih');
+
+            if (page === 'dashboard') {
+                dash.classList.remove('hidden');
+                tasbih.classList.add('hidden');
+                deskDash?.classList.add('nav-tab-active');
+                deskTasbih?.classList.remove('nav-tab-active');
+                mobDash?.classList.add('nav-tab-active');
+                mobTasbih?.classList.remove('nav-tab-active');
+            } else {
+                dash.classList.add('hidden');
+                tasbih.classList.remove('hidden');
+                deskTasbih?.classList.add('nav-tab-active');
+                deskDash?.classList.remove('nav-tab-active');
+                mobTasbih?.classList.add('nav-tab-active');
+                mobDash?.classList.remove('nav-tab-active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateClockAndCountdown() {
+            const now = new Date();
+            const todayName = getTodayIndonesianName();
+            document.getElementById('liveClock').innerText = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} ${selectedTimezone}`;
+            document.getElementById('liveDayBadge').innerText = `🌸 Hari Ini: ${todayName}`;
+            document.getElementById('liveDateText').innerText = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        let tasbihCount = 0;
+        let tasbihTarget = 33;
+        let tasbihPhrase = 'Subhanallah';
+
+        function setDzikirPhrase(phrase, target) {
+            tasbihPhrase = phrase;
+            tasbihTarget = target;
+            tasbihCount = 0;
+            document.getElementById('tasbihPhraseLabel').innerText = phrase;
+            document.getElementById('tasbihCounterDisplay').innerText = '0';
+            document.getElementById('tasbihTargetLabel').innerText = `Target: ${target} kali`;
+        }
+
+        function incrementTasbih(e) {
+            tasbihCount++;
+            document.getElementById('tasbihCounterDisplay').innerText = tasbihCount;
+            if (tasbihCount === tasbihTarget) {
+                playCuteBell();
+                showToast(`MasyaAllah, ${tasbihPhrase} ${tasbihTarget}x selesai! 🌸`);
+            }
+        }
+
+        function resetTasbih() {
+            tasbihCount = 0;
+            document.getElementById('tasbihCounterDisplay').innerText = '0';
+            showToast('Tasbih direset ke 0 📿');
+        }
+
+        function playCuteBell() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.frequency.setValueAtTime(880, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.4);
+            } catch (e) {}
+        }
+
+        function copyScheduleToClipboard() {
+            let text = `🌸 *JADWAL SHOLAT SUBUH & MAGHRIB* 🌸\n\n`;
+            scheduleData.forEach(i => { text += `✨ *${i.day}* | Subuh: ${i.subuhTime} | Maghrib: ${i.maghribTime}\n`; });
+            const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+            document.execCommand('copy'); document.body.removeChild(ta);
+            showToast('Jadwal disalin ke clipboard! 📋');
+        }
+
+        let toastTimer;
+        function showToast(text) {
+            const t = document.getElementById('kawaiiToast');
+            document.getElementById('toastText').innerText = text;
+            t.classList.remove('translate-y-24', 'opacity-0');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.add('translate-y-24', 'opacity-0'), 2300);
+        }
+
+        window.onload = function() {
+            loadState();
+            renderApp();
+            setInterval(updateClockAndCountdown, 1000);
+        };
+    </script>
+</body>
+</html>
