@@ -423,6 +423,63 @@
                 </div>
             </div>
 
+            <!-- Rekap & Kehadiran Sholat Santri (Subuh & Maghrib) -->
+            <div class="kawaii-border rounded-3xl bg-white/95 p-5">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-9 h-9 rounded-2xl bg-chibi-mint border-2 border-chibi-brown flex items-center justify-center text-lg">📋</span>
+                        <div>
+                            <h2 class="font-cute text-lg text-chibi-brown">Rekap Santri Sudah Sholat Subuh & Maghrib</h2>
+                            <p class="text-xs font-semibold text-chibi-softbrown">Lihat & tandai siapa saja yang sudah mengisi jadwal sholat</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select id="attendanceDaySelect" onchange="changeAttendanceDay(this.value)" class="kawaii-border-sm bg-chibi-cream text-chibi-brown font-cute text-xs rounded-xl px-3 py-1.5 focus:outline-none cursor-pointer">
+                            <!-- Diisi via JS -->
+                        </select>
+                        <button onclick="copyAttendanceToClipboard()" class="kawaii-border-sm kawaii-btn bg-sky-100 text-chibi-brown font-cute text-xs px-3 py-1.5 rounded-xl cursor-pointer">
+                            📋 Salin Rekap
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ringkasan Siapa Saja yang Sudah Mengisi -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                    <div class="kawaii-border-sm rounded-2xl bg-sky-50 p-3.5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-cute text-xs bg-sky-200 border border-chibi-brown px-2.5 py-0.5 rounded-full">🌅 Sudah Mengisi Subuh</span>
+                            <span id="subuhFilledCount" class="font-cute text-xs text-chibi-brown">0 / 0</span>
+                        </div>
+                        <div id="subuhFilledNames" class="flex flex-wrap gap-1.5 min-h-[28px] items-center">
+                            <!-- Dirender via JS -->
+                        </div>
+                    </div>
+                    <div class="kawaii-border-sm rounded-2xl bg-purple-50 p-3.5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-cute text-xs bg-purple-200 border border-chibi-brown px-2.5 py-0.5 rounded-full">🌙 Sudah Mengisi Maghrib</span>
+                            <span id="maghribFilledCount" class="font-cute text-xs text-chibi-brown">0 / 0</span>
+                        </div>
+                        <div id="maghribFilledNames" class="flex flex-wrap gap-1.5 min-h-[28px] items-center">
+                            <!-- Dirender via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Tampilan Santri -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-3">
+                    <button onclick="setAttendanceFilter('all')" id="attFilter-all" class="kawaii-border-sm px-3 py-1 rounded-xl font-cute text-xs bg-chibi-pink text-chibi-brown cursor-pointer">Semua</button>
+                    <button onclick="setAttendanceFilter('subuh')" id="attFilter-subuh" class="kawaii-border-sm px-3 py-1 rounded-xl font-cute text-xs bg-white text-chibi-brown cursor-pointer">🌅 Sudah Subuh</button>
+                    <button onclick="setAttendanceFilter('maghrib')" id="attFilter-maghrib" class="kawaii-border-sm px-3 py-1 rounded-xl font-cute text-xs bg-white text-chibi-brown cursor-pointer">🌙 Sudah Maghrib</button>
+                    <button onclick="setAttendanceFilter('both')" id="attFilter-both" class="kawaii-border-sm px-3 py-1 rounded-xl font-cute text-xs bg-white text-chibi-brown cursor-pointer">💖 Lengkap Keduanya</button>
+                    <button onclick="setAttendanceFilter('none')" id="attFilter-none" class="kawaii-border-sm px-3 py-1 rounded-xl font-cute text-xs bg-white text-chibi-brown cursor-pointer">⏳ Belum Mengisi</button>
+                </div>
+
+                <!-- Daftar Ceklis Per Santri -->
+                <div id="santriAttendanceContainer" class="space-y-2.5">
+                    <!-- Dirender via JS -->
+                </div>
+            </div>
+
         </div>
 
         <!-- ================= HALAMAN 2: TASBIH & DOA HARIAN ================= -->
@@ -885,6 +942,7 @@
             editingSantriIndex = -1;
             saveSantri();
             renderSantriList();
+            renderSantriAttendance();
             showToast(`Santri "${name}" ditambahkan! 🧕`);
         }
 
@@ -902,10 +960,15 @@
                 input.focus();
                 return;
             }
+            const oldName = santriList[idx];
             santriList[idx] = newName;
+            if (oldName !== newName) {
+                renameSantriInAttendance(oldName, newName);
+            }
             editingSantriIndex = -1;
             saveSantri();
             renderSantriList();
+            renderSantriAttendance();
             showToast('Nama santri diperbarui! ✏️');
         }
 
@@ -917,11 +980,223 @@
         function deleteSantri(idx) {
             const removed = santriList[idx];
             santriList.splice(idx, 1);
+            removeSantriFromAttendance(removed);
             if (editingSantriIndex === idx) editingSantriIndex = -1;
             else if (editingSantriIndex > idx) editingSantriIndex--;
             saveSantri();
             renderSantriList();
+            renderSantriAttendance();
             showToast(`Santri "${removed}" dihapus! 🗑️`);
+        }
+
+        const SANTRI_ATTENDANCE_KEY = 'absensi_santri_chibi_v1';
+        let santriAttendance = {};
+        let selectedAttendanceDay = 'senin';
+        let attendanceFilter = 'all';
+
+        function loadAttendance() {
+            try {
+                const saved = localStorage.getItem(SANTRI_ATTENDANCE_KEY);
+                santriAttendance = saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                santriAttendance = {};
+            }
+        }
+
+        function saveAttendance() {
+            try {
+                localStorage.setItem(SANTRI_ATTENDANCE_KEY, JSON.stringify(santriAttendance));
+            } catch (e) {}
+        }
+
+        function ensureDayAttendance(dayId) {
+            if (!santriAttendance[dayId]) {
+                santriAttendance[dayId] = { subuh: [], maghrib: [] };
+            }
+            if (!Array.isArray(santriAttendance[dayId].subuh)) santriAttendance[dayId].subuh = [];
+            if (!Array.isArray(santriAttendance[dayId].maghrib)) santriAttendance[dayId].maghrib = [];
+            return santriAttendance[dayId];
+        }
+
+        function renameSantriInAttendance(oldName, newName) {
+            Object.keys(santriAttendance).forEach(dayId => {
+                ['subuh', 'maghrib'].forEach(prayer => {
+                    const arr = santriAttendance[dayId]?.[prayer];
+                    if (Array.isArray(arr)) {
+                        const i = arr.indexOf(oldName);
+                        if (i !== -1) arr[i] = newName;
+                    }
+                });
+            });
+            saveAttendance();
+        }
+
+        function removeSantriFromAttendance(name) {
+            Object.keys(santriAttendance).forEach(dayId => {
+                ['subuh', 'maghrib'].forEach(prayer => {
+                    const arr = santriAttendance[dayId]?.[prayer];
+                    if (Array.isArray(arr)) {
+                        santriAttendance[dayId][prayer] = arr.filter(n => n !== name);
+                    }
+                });
+            });
+            saveAttendance();
+        }
+
+        function initAttendanceDaySelect() {
+            const select = document.getElementById('attendanceDaySelect');
+            if (!select) return;
+            const todayName = getTodayIndonesianName().toLowerCase();
+            const matched = defaultScheduleData.find(d => d.id === todayName);
+            selectedAttendanceDay = matched ? matched.id : 'senin';
+
+            select.innerHTML = defaultScheduleData.map(d => {
+                const isToday = d.id === todayName;
+                return `<option value="${d.id}">${d.day}${isToday ? ' (Hari Ini)' : ''}</option>`;
+            }).join('');
+            select.value = selectedAttendanceDay;
+        }
+
+        function changeAttendanceDay(dayId) {
+            selectedAttendanceDay = dayId;
+            renderSantriAttendance();
+        }
+
+        function setAttendanceFilter(filter) {
+            attendanceFilter = filter;
+            ['all', 'subuh', 'maghrib', 'both', 'none'].forEach(key => {
+                const btn = document.getElementById(`attFilter-${key}`);
+                if (!btn) return;
+                if (key === filter) {
+                    btn.classList.add('bg-chibi-pink');
+                    btn.classList.remove('bg-white');
+                } else {
+                    btn.classList.remove('bg-chibi-pink');
+                    btn.classList.add('bg-white');
+                }
+            });
+            renderSantriAttendance();
+        }
+
+        function toggleSantriPrayer(name, prayer) {
+            const dayData = ensureDayAttendance(selectedAttendanceDay);
+            const list = dayData[prayer];
+            const idx = list.indexOf(name);
+            if (idx === -1) {
+                list.push(name);
+                showToast(`${name} tercatat sholat ${prayer === 'subuh' ? 'Subuh 🌅' : 'Maghrib 🌙'}!`);
+            } else {
+                list.splice(idx, 1);
+                showToast(`Status ${prayer === 'subuh' ? 'Subuh' : 'Maghrib'} ${name} dibatalkan.`);
+            }
+            saveAttendance();
+            renderSantriAttendance();
+        }
+
+        function renderSantriAttendance() {
+            const dayData = ensureDayAttendance(selectedAttendanceDay);
+            const subuhSet = new Set(dayData.subuh);
+            const maghribSet = new Set(dayData.maghrib);
+
+            const subuhFilled = santriList.filter(name => subuhSet.has(name));
+            const maghribFilled = santriList.filter(name => maghribSet.has(name));
+
+            const subuhCountEl = document.getElementById('subuhFilledCount');
+            const maghribCountEl = document.getElementById('maghribFilledCount');
+            const subuhNamesEl = document.getElementById('subuhFilledNames');
+            const maghribNamesEl = document.getElementById('maghribFilledNames');
+
+            if (subuhCountEl) subuhCountEl.innerText = `${subuhFilled.length} / ${santriList.length}`;
+            if (maghribCountEl) maghribCountEl.innerText = `${maghribFilled.length} / ${santriList.length}`;
+
+            if (subuhNamesEl) {
+                subuhNamesEl.innerHTML = subuhFilled.length
+                    ? subuhFilled.map(n => `<span class="bg-white border border-chibi-brown text-chibi-brown font-cute text-xs px-2.5 py-0.5 rounded-full">✅ ${escapeHtml(n)}</span>`).join('')
+                    : `<span class="text-xs font-semibold text-chibi-softbrown">Belum ada santri yang mengisi</span>`;
+            }
+
+            if (maghribNamesEl) {
+                maghribNamesEl.innerHTML = maghribFilled.length
+                    ? maghribFilled.map(n => `<span class="bg-white border border-chibi-brown text-chibi-brown font-cute text-xs px-2.5 py-0.5 rounded-full">✅ ${escapeHtml(n)}</span>`).join('')
+                    : `<span class="text-xs font-semibold text-chibi-softbrown">Belum ada santri yang mengisi</span>`;
+            }
+
+            const container = document.getElementById('santriAttendanceContainer');
+            if (!container) return;
+
+            if (santriList.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5 kawaii-border-sm rounded-2xl bg-chibi-cream">
+                        <p class="font-cute text-sm text-chibi-softbrown">Tambahkan nama santri terlebih dahulu di panel Daftar Nama Santri di atas. 🌸</p>
+                    </div>`;
+                return;
+            }
+
+            const filtered = santriList.filter(name => {
+                const s = subuhSet.has(name);
+                const m = maghribSet.has(name);
+                if (attendanceFilter === 'subuh') return s;
+                if (attendanceFilter === 'maghrib') return m;
+                if (attendanceFilter === 'both') return s && m;
+                if (attendanceFilter === 'none') return !s && !m;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5 kawaii-border-sm rounded-2xl bg-chibi-cream">
+                        <p class="font-cute text-sm text-chibi-softbrown">Tidak ada santri pada filter ini. ✨</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(name => {
+                const hasSubuh = subuhSet.has(name);
+                const hasMaghrib = maghribSet.has(name);
+                const encodedName = escapeHtml(name).replace(/'/g, "\\'");
+                return `
+                <div class="kawaii-border-sm rounded-2xl bg-chibi-cream p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="w-8 h-8 rounded-xl bg-white border-2 border-chibi-brown flex items-center justify-center text-sm flex-shrink-0">${hasSubuh && hasMaghrib ? '💖' : (hasSubuh || hasMaghrib ? '🌸' : '🧕')}</span>
+                        <div class="min-w-0">
+                            <p class="font-cute text-sm text-chibi-brown truncate">${escapeHtml(name)}</p>
+                            <p class="text-[11px] font-semibold text-chibi-softbrown">
+                                ${hasSubuh && hasMaghrib ? 'Sudah mengisi Subuh & Maghrib' : hasSubuh ? 'Sudah mengisi Subuh' : hasMaghrib ? 'Sudah mengisi Maghrib' : 'Belum mengisi Subuh & Maghrib'}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button onclick="toggleSantriPrayer('${encodedName}', 'subuh')" class="kawaii-border-sm kawaii-btn px-3 py-1.5 rounded-xl font-cute text-xs cursor-pointer ${hasSubuh ? 'bg-chibi-mint text-chibi-brown' : 'bg-white text-chibi-brown'}">
+                            🌅 Subuh: ${hasSubuh ? 'Sudah ✅' : 'Belum'}
+                        </button>
+                        <button onclick="toggleSantriPrayer('${encodedName}', 'maghrib')" class="kawaii-border-sm kawaii-btn px-3 py-1.5 rounded-xl font-cute text-xs cursor-pointer ${hasMaghrib ? 'bg-pink-300 text-chibi-brown' : 'bg-white text-chibi-brown'}">
+                            🌙 Maghrib: ${hasMaghrib ? 'Sudah ✅' : 'Belum'}
+                        </button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function copyAttendanceToClipboard() {
+            const dayObj = defaultScheduleData.find(d => d.id === selectedAttendanceDay);
+            const dayLabel = dayObj ? dayObj.day : selectedAttendanceDay;
+            const dayData = ensureDayAttendance(selectedAttendanceDay);
+            const subuhList = santriList.filter(n => dayData.subuh.includes(n));
+            const maghribList = santriList.filter(n => dayData.maghrib.includes(n));
+
+            let text = `📋 *REKAP SHOLAT SANTRI (${dayLabel.toUpperCase()})* 📋\n\n`;
+            text += `🌅 *Sudah Subuh (${subuhList.length}/${santriList.length}):*\n`;
+            text += subuhList.length ? subuhList.map((n, i) => `${i + 1}. ${n}`).join('\n') : '- Belum ada';
+            text += `\n\n🌙 *Sudah Maghrib (${maghribList.length}/${santriList.length}):*\n`;
+            text += maghribList.length ? maghribList.map((n, i) => `${i + 1}. ${n}`).join('\n') : '- Belum ada';
+
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast(`Rekap hari ${dayLabel} disalin! 📋`);
         }
 
         window.onload = function() {
@@ -930,6 +1205,9 @@
             renderApp();
             loadSantri();
             renderSantriList();
+            loadAttendance();
+            initAttendanceDaySelect();
+            renderSantriAttendance();
             setInterval(updateClockAndCountdown, 1000);
         };
     </script>
